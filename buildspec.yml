@@ -12,8 +12,8 @@ phases:
       - sudo mv terraform /usr/local/bin
       - sudo chmod +x /usr/local/bin/terraform
       - rm terraform_1.4.6_linux_amd64.zip
-      - apt-get update
-      - apt-cache search source
+      #- apt-get update
+      #- apt-cache search source
 
   pre_build:
     commands:
@@ -22,19 +22,19 @@ phases:
       - cd fortigate-terraform-deploy/aws/7.2/single
       - echo "Copying terraform.tfstate to shared folder"
       - aws s3 cp s3://forti.tfstates/tfstates/terraform.tfstate ./fortigate-terraform-deploy/aws/7.2/single
-      #- sudo chmod +x ./fortigate-terraform-deploy/aws/7.2/single/terraform.tfstate
-      - echo "Terraform state file copied successfully
+      - sudo chmod 777 ./fortigate-terraform-deploy/aws/7.2/single/terraform.tfstate
+      - echo "Terraform state file copied successfully"
       - terraform init -reconfigure
       - echo "Prepare terraform initialized"
       - echo "Plan terraform deployment"
       - terraform plan
   build:
     commands:
+     - cd fortigate-terraform-deploy/aws/7.2/single
      - echo "Apply terraform deployment"
      - terraform apply -auto-approve
      - echo "Apply stage finished"
-     #- cd fortigate-terraform-deploy/aws/7.2/single
-     - echo "Destroying previously deployment"
+     - echo "Destroying previously deployed resources"
      - terraform destroy -auto-approve
      - echo "Terraform deployment destroy successfully"     
   post_build:
