@@ -1,0 +1,44 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - sudo apt update
+      - sudo apt install git -y
+      - sudo apt install python3-pip -y
+      - sudo pip install boto3
+      - wget https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip
+      - unzip terraform_1.4.6_linux_amd64.zip
+      - sudo mv terraform /usr/local/bin
+      - sudo chmod +x /usr/local/bin/terraform
+      - rm terraform_1.4.6_linux_amd64.zip
+      - apt-get update
+      - apt-cache search source
+
+  pre_build:
+    commands:
+      - echo "Prepare terraform file"
+      - git clone https://github.com/davidortizac/fortigate-terraform-deploy.git
+      - cd fortigate-terraform-deploy/aws/7.2/single
+      - terraform init
+      - echo "Prepare terraform initialized"
+      - echo "Copying terraform.tfstate to shared folder"
+      - aws s3 cp terraform.tfstate s3://forti.tfstates/tfstates/
+      - echo "Terraform state file copied successfully
+      - echo "Plan terraform deployment"
+      - terraform plan
+  build:
+    commands:
+     - echo "Apply terraform deployment"
+     - terraform apply -auto-approve
+     - echo "Apply stage finished"
+     #- cd fortigate-terraform-deploy/aws/7.2/single
+     - echo "Destroying previously deployment"
+     - terraform destroy -auto-approve
+     - echo "Terraform deployment destroy successfully"     
+  post_build:
+    commands:
+      #- cd fortigate-terraform-deploy/aws/7.2/single
+      #- echo "Copying terraform.tfstate to shared folder"
+      #- aws s3 cp terraform.tfstate https://s3.us-west-2.amazonaws.com/forti.tfstates/tfstates/
+     - echo "Terraform  Finished successfully"      
