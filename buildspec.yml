@@ -30,7 +30,7 @@ phases:
       - terraform plan
   build:
     commands:
-     - cd fortigate-terraform-deploy/aws/7.2/single
+     #- cd fortigate-terraform-deploy/aws/7.2/single
      - echo "Apply terraform deployment"
      - terraform apply -auto-approve
      - echo "Apply stage finished"
