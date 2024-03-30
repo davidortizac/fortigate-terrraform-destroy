@@ -23,7 +23,7 @@ phases:
       - terraform init
       - echo "Prepare terraform initialized"
       - echo "Copying terraform.tfstate to shared folder"
-      - aws s3 cp terraform.tfstate s3://forti.tfstates/tfstates/
+      - aws s3 cp s3://forti.tfstates/tfstates/terraform.tfstate ./fortigate-terraform-deploy/aws/7.2/single
       - echo "Terraform state file copied successfully
       - echo "Plan terraform deployment"
       - terraform plan
