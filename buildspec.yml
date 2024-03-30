@@ -24,10 +24,10 @@ phases:
       - aws s3 cp s3://forti.tfstates/tfstates/terraform.tfstate ./fortigate-terraform-deploy/aws/7.2/single
       #- sudo chmod 777 ./fortigate-terraform-deploy/aws/7.2/single/terraform.tfstate
       - echo "Terraform state file copied successfully"
-      - terraform init -reconfigure
+      - terraform init
       - echo "Prepare terraform initialized"
       - echo "Plan terraform deployment"
-      - terraform plan
+      - terraform plan -destroy
   build:
     commands:
      #- cd fortigate-terraform-deploy/aws/7.2/single
@@ -35,7 +35,7 @@ phases:
      #- terraform apply -auto-approve
      #- echo "Apply stage finished"
      - echo "Destroying previously deployed resources"
-     - terraform destroy -auto-approve
+     - terraform destroy -force
      - echo "Terraform deployment destroy successfully"     
   post_build:
     commands:
