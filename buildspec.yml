@@ -35,7 +35,7 @@ phases:
      #- terraform apply -auto-approve
      #- echo "Apply stage finished"
      - echo "Destroying previously deployed resources"
-     - terraform destroy -force
+     - terraform destroy -auto-approve
      - echo "Terraform deployment destroy successfully"     
   post_build:
     commands:
