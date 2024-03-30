@@ -31,9 +31,9 @@ phases:
   build:
     commands:
      #- cd fortigate-terraform-deploy/aws/7.2/single
-     - echo "Apply terraform deployment"
-     - terraform apply -auto-approve
-     - echo "Apply stage finished"
+     #- echo "Apply terraform deployment"
+     #- terraform apply -auto-approve
+     #- echo "Apply stage finished"
      - echo "Destroying previously deployed resources"
      - terraform destroy -auto-approve
      - echo "Terraform deployment destroy successfully"     
