@@ -22,6 +22,7 @@ phases:
       - cd fortigate-terraform-deploy/aws/7.2/single
       - echo "Copying terraform.tfstate to shared folder"
       - aws s3 cp s3://forti.tfstates/tfstates/terraform.tfstate ./fortigate-terraform-deploy/aws/7.2/single
+      - sudo chmod +x ./fortigate-terraform-deploy/aws/7.2/single/terraform.tfstate
       - echo "Terraform state file copied successfully
       - terraform init -reconfigure
       - echo "Prepare terraform initialized"
